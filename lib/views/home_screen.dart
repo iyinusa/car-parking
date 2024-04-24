@@ -49,8 +49,18 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildMenuItem(BuildContext context, String title, String route) {
+    Icon icon = const Icon(Icons.arrow_forward);
+    if (title == 'Book A Space') icon = const Icon(Icons.add);
+    if (title == 'Parking Spaces') icon = const Icon(Icons.table_chart);
+    if (title == 'Booking History') icon = const Icon(Icons.history);
+    if (title == 'Logout') icon = const Icon(Icons.logout);
+
     return ListTile(
-      title: Text(title),
+      title: Text(
+        title,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
+      trailing: icon,
       onTap: () {
         Navigator.pushNamed(context, route);
       },
