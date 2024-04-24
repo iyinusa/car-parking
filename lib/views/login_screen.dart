@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+import '../controllers/auth_controller.dart';
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  late String _email;
+  late String _password;
+  final AuthController _authController = AuthController();
 
   @override
   Widget build(BuildContext context) {
@@ -9,9 +21,88 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: const Center(
-        child: Text('Login Screen'),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/background.gif"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          decoration: BoxDecoration(color: Colors.white.withOpacity(0.9)),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      color: Colors.black,
+                      height: 150,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Email'),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      // You can add more sophisticated email validation here if needed
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _email = value!;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Password'),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      // You can add more password validation rules here if needed
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _password = value!;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      _submitForm();
+                    },
+                    child: const Text('Login'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      String? result = await _authController.login(_email, _password);
+      if (result != null) {
+        // Login successful, navigate to another screen or perform desired action
+        // For example, navigate to the home screen
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        // Show error message to the user
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(result!),
+          backgroundColor: Colors.red,
+        ));
+      }
+    }
   }
 }
