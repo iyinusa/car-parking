@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         child: Container(
-          decoration: BoxDecoration(color: Colors.white.withOpacity(0.9)),
+          decoration: BoxDecoration(color: Colors.white.withOpacity(0.85)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

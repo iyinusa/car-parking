@@ -21,65 +21,68 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/background.gif"),
-            fit: BoxFit.cover,
-          ),
-        ),
+      body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(color: Colors.white.withOpacity(0.9)),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      color: Colors.black,
-                      height: 150,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/background.gif"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Container(
+            decoration: BoxDecoration(color: Colors.white.withOpacity(0.9)),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        color: Colors.black,
+                        height: 150,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Email'),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      // You can add more sophisticated email validation here if needed
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _email = value!;
-                    },
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Password'),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      // You can add more password validation rules here if needed
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _password = value!;
-                    },
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      _submitForm();
-                    },
-                    child: const Text('Login'),
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: 'Email'),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        // You can add more sophisticated email validation here if needed
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _email = value!;
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: 'Password'),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        // You can add more password validation rules here if needed
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _password = value!;
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        _submitForm();
+                      },
+                      child: const Text('Login'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

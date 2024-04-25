@@ -17,7 +17,7 @@ class WelcomeScreen extends StatelessWidget {
           ),
         ),
         child: Container(
-          decoration: const BoxDecoration(color: Colors.black87),
+          decoration: const BoxDecoration(color: Colors.black54),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
