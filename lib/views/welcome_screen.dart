@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
 
-class WelcomeScreen extends StatelessWidget {
+import '../helper/session.dart';
+
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  // check for login
+  _checkLog() async {
+    await Session().getLog().then((logged) {
+      if (logged == true) {
+        Navigator.pushNamed(context, '/home');
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    _checkLog();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Car Parking'),
-      // ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(

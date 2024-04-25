@@ -2,6 +2,7 @@ import 'package:carparking/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'views/book_space.dart';
 import 'views/home_screen.dart';
 import 'views/login_screen.dart';
 import 'views/register_screen.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
         '/home': (context) => const HomeScreen(),
+        '/book_space': (context) => const BookSpaceScreen(),
       },
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../helper/session.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -33,6 +35,7 @@ class HomeScreen extends StatelessWidget {
                 child: ListView(
                   children: [
                     _buildMenuItem(context, 'Book A Space', '/book_space'),
+                    _buildMenuItem(context, 'Park My Car', '/park_car'),
                     _buildMenuItem(
                         context, 'Parking Spaces', '/parking_spaces'),
                     _buildMenuItem(
@@ -51,6 +54,7 @@ class HomeScreen extends StatelessWidget {
   Widget _buildMenuItem(BuildContext context, String title, String route) {
     Icon icon = const Icon(Icons.arrow_forward);
     if (title == 'Book A Space') icon = const Icon(Icons.add);
+    if (title == 'Park My Car') icon = const Icon(Icons.car_rental);
     if (title == 'Parking Spaces') icon = const Icon(Icons.table_chart);
     if (title == 'Booking History') icon = const Icon(Icons.history);
     if (title == 'Logout') icon = const Icon(Icons.logout);
@@ -62,7 +66,14 @@ class HomeScreen extends StatelessWidget {
       ),
       trailing: icon,
       onTap: () {
-        Navigator.pushNamed(context, route);
+        if (title != 'Logout') {
+          Navigator.pushNamed(context, route);
+        } else {
+          // Logout user from session
+          Session().setLog(false);
+          Session().setData('string', 'uID', '');
+          Navigator.pushNamed(context, '/');
+        }
       },
     );
   }

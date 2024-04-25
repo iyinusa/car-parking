@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../helper/session.dart';
 import '../models/user_model.dart';
 
 class AuthController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final Session sess = Session();
 
   /// The function `register` attempts to create a new user account with email and password
   /// authentication, saves user information to Firestore upon successful registration, and returns a
@@ -28,7 +30,7 @@ class AuthController {
       );
 
       final uID = userCredential.user?.uid;
-      final token = userCredential.credential?.token;
+      // final token = userCredential.credential?.token;
 
       // If registration successful, save user information to Firestore
       if (userCredential.user != null) {
@@ -64,6 +66,11 @@ class AuthController {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       final uID = userCredential.user?.uid;
+
+      // save session
+      sess.setLog(true);
+      sess.setData('string', 'uID', uID);
+
       return uID; // Return null if login succeeds
     } catch (e) {
       return e.toString(); // Return error message if login fails
