@@ -1,20 +1,27 @@
 import 'package:carparking/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'views/book_space.dart';
 import 'views/home_screen.dart';
 import 'views/login_screen.dart';
+import 'views/park_car_screen.dart';
 import 'views/register_screen.dart';
 import 'views/welcome_screen.dart';
 
 void main() async {
   // Ensure Flutter is initialized before Firebase
   WidgetsFlutterBinding.ensureInitialized();
+
   // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  // Request permission for push notifications
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  await messaging.requestPermission();
 
   runApp(const MyApp());
 }
@@ -44,6 +51,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterScreen(),
         '/home': (context) => const HomeScreen(),
         '/book_space': (context) => const BookSpaceScreen(),
+        '/park_car': (context) => const ParkMyCarScreen(),
       },
     );
   }

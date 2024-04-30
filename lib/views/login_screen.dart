@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../controllers/auth_controller.dart';
+import '../helper/session.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +15,23 @@ class _LoginScreenState extends State<LoginScreen> {
   late String _email;
   late String _password;
   final AuthController _authController = AuthController();
+
+  bool isLoading = false;
+
+  // check for login
+  _checkLog() async {
+    await Session().getLog().then((logged) {
+      if (logged == true) {
+        Navigator.pushNamed(context, '/home');
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    _checkLog();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +97,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         _submitForm();
                       },
-                      child: const Text('Login'),
+                      child: isLoading
+                          ? const CircularProgressIndicator()
+                          : const Text('Login'),
                     ),
                   ],
                 ),
@@ -92,6 +112,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _submitForm() async {
+    setState(() {
+      isLoading = true;
+    });
+
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       String? result = await _authController.login(_email, _password);
@@ -107,5 +131,9 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
       }
     }
+
+    setState(() {
+      isLoading = false;
+    });
   }
 }

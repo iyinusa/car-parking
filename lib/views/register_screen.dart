@@ -16,6 +16,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final UserModel _user = UserModel(email: '', password: '');
   final AuthController _authController = AuthController();
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +122,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onPressed: () {
                         _submitForm();
                       },
-                      child: const Text('Register'),
+                      child: isLoading
+                          ? const CircularProgressIndicator()
+                          : const Text('Register'),
                     ),
                   ],
                 ),
@@ -133,6 +137,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _submitForm() async {
+    setState(() {
+      isLoading = true;
+    });
+
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       String? errorMessage = await _authController.register(_user);
@@ -148,5 +156,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ));
       }
     }
+
+    setState(() {
+      isLoading = false;
+    });
   }
 }

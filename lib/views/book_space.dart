@@ -96,7 +96,10 @@ class _BookSpaceScreenState extends State<BookSpaceScreen> {
           onPressed: () {
             _selectDate(context);
           },
-          child: Text(_selectedDate.toString().split(' ')[0]),
+          child: Text(
+            _selectedDate.toString().split(' ')[0],
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
       ],
     );
